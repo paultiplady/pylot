@@ -7,7 +7,7 @@ from pylot.configuration import Field, Configuration, ConfigurationError
 logging.basicConfig(level=logging.INFO, format=' %(message)s')
 
 
-class TestConfig(Configuration):
+class SimpleConfig(Configuration):
     foo = Field()
 
 
@@ -18,7 +18,7 @@ class DefaultConfig(Configuration):
 
 def test_simple_config():
     """Test that a Value can be set in a Configuration."""
-    config = TestConfig(values={'foo': 'bar'})
+    config = SimpleConfig(values={'foo': 'bar'})
 
     assert config.foo == 'bar'
 
@@ -34,7 +34,7 @@ def test_default_config():
 def test_not_required_if_default():
     """Test that a field is required if no default is specified."""
     with pytest.raises(ConfigurationError):
-        TestConfig(values={})
+        SimpleConfig(values={})
 
 
 def test_default_none():

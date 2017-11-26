@@ -12,5 +12,4 @@ def test_deploy_dry_run(capsys):
     stdout, stderr = capsys.readouterr()
     assert 'FOO' in stdout
     assert 'BAR' in stdout
-    assert 'name: THE_NAME' in stdout
     assert not stderr
