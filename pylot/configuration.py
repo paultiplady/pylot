@@ -1,5 +1,7 @@
 import logging
 
+from pylot import PylotError
+
 _log = logging.getLogger(__name__)
 
 
@@ -12,14 +14,12 @@ class Field:
 
 class ConfigurationMetaClass(type):
     def __new__(mcs, name, bases, namespace, **kwargs):
-        _log.debug('Building Class %s.', name)
         klass = type.__new__(mcs, name, bases, namespace, **kwargs)
 
         klass.fields = {}
 
         for k, v in namespace.items():
             if isinstance(v, Field):
-                _log.debug('Got Field %s.', k)
                 # namespace.pop(k)
                 klass.fields[k] = v
 
@@ -42,6 +42,9 @@ class Configuration(metaclass=ConfigurationMetaClass):
                 raise ConfigurationError('Configuration field "%s" was not provided in values, '
                                          'and there is no default value.' % name)
 
+    def __str__(self):
+        return str({name: getattr(self, name) for name in self.fields})
 
-class ConfigurationError(Exception):
+
+class ConfigurationError(PylotError):
     pass

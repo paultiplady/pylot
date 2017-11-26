@@ -11,6 +11,11 @@ class TestConfig(Configuration):
     foo = Field()
 
 
+class DefaultConfig(Configuration):
+    foo = Field()
+    bar = Field(default='BAR')
+
+
 def test_simple_config():
     """Test that a Value can be set in a Configuration."""
     config = TestConfig(values={'foo': 'bar'})
@@ -20,14 +25,6 @@ def test_simple_config():
 
 def test_default_config():
     """Test that a default Value can be set in a Configuration."""
-    class DefaultConfig(Configuration):
-        # fields = {
-        #     'foo': Field(),
-        #     'bar': Field(default='BAR'),
-        # }
-        foo = Field()
-        bar = Field(default='BAR')
-
     config = DefaultConfig(values={'foo': 'FOO'})
 
     assert config.foo == 'FOO'
@@ -51,3 +48,9 @@ def test_default_none():
     config = NoneDefaultConfig(values={})
 
     assert config.none is None
+
+
+def test_configuration_str():
+    """Test that a simple string representation can be rendered for a Configuration instance."""
+    config = DefaultConfig(values={'foo': 'FOO!'})
+    assert str(config) == str({'foo': 'FOO!', 'bar': 'BAR'})

@@ -2,7 +2,7 @@ import importlib
 from typing import List, Type
 
 from kubernetes.client import V1Pod
-from pylot import log
+from pylot import log, PylotError
 from pylot.configuration import Configuration
 
 
@@ -29,5 +29,5 @@ def import_(module_: str) -> (List, Type[Configuration]):
     return specs, configuration
 
 
-class LoaderError(Exception):
+class LoaderError(PylotError):
     pass
