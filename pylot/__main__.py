@@ -12,11 +12,10 @@ from docopt import docopt
 from kubernetes.client import V1Pod
 
 _log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format=' %(message)s')
 
 
 def main():
-    logging.basicConfig(level=logging.INFO, format=' %(message)s')
-
     args = docopt(__doc__)
     if 'dump' in args:
         dump(args)
