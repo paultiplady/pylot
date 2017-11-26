@@ -1,0 +1,21 @@
+interactions:
+- request:
+    body: '{"metadata": {"name": "pod-foo"}, "spec": {"containers": [{"command": ["sh",
+      "-c", "while date; do sleep 1; done"], "image": "busybox", "name": "container-foo"}]}}'
+    headers:
+      Accept: [application/json]
+      Content-Type: [application/json]
+      User-Agent: [Swagger-Codegen/4.0.0/python]
+    method: POST
+    uri: https://192.168.99.100:8443/api/v1/namespaces/default/pods
+  response:
+    body: {string: '{"kind":"Pod","apiVersion":"v1","metadata":{"name":"pod-foo","namespace":"default","selfLink":"/api/v1/namespaces/default/pods/pod-foo","uid":"62b932d0-d304-11e7-98e6-080027e0be06","resourceVersion":"1254933","creationTimestamp":"2017-11-26T23:49:04Z"},"spec":{"volumes":[{"name":"default-token-vtk0q","secret":{"secretName":"default-token-vtk0q","defaultMode":420}}],"containers":[{"name":"container-foo","image":"busybox","command":["sh","-c","while
+        date; do sleep 1; done"],"resources":{},"volumeMounts":[{"name":"default-token-vtk0q","readOnly":true,"mountPath":"/var/run/secrets/kubernetes.io/serviceaccount"}],"terminationMessagePath":"/dev/termination-log","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"default","serviceAccount":"default","securityContext":{},"imagePullSecrets":[{"name":"registry-gcr.io"},{"name":"gcr-secret"}]},"status":{"phase":"Pending"}}
+
+'}
+    headers:
+      Content-Length: ['960']
+      Content-Type: [application/json]
+      Date: ['Sun, 26 Nov 2017 23:49:04 GMT']
+    status: {code: 201, message: Created}
+version: 1

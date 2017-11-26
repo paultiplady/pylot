@@ -1,9 +1,11 @@
 import logging
 from pprint import pformat
 
+import kubernetes
 import yaml
-from pylot.loader import import_
 from pylot import log, PylotError
+from pylot.loader import import_
+from tests.fixtures import all_default_app
 
 
 def dump(args):
@@ -41,4 +43,9 @@ def deploy(module_, values_path=None, dry_run=False, debug=False):
         print('Specs:\n%s' % specs)
     else:
         print('Deploying...')
-        pass
+        # TODO: Fix this dummy implementation. This was added for exploratory purposes.
+        kubernetes.config.load_kube_config()
+        v1_client = kubernetes.client.CoreV1Api()
+        pod = all_default_app.pod
+        create_response = v1_client.create_namespaced_pod(namespace='default', body=pod)
+        log.debug('Response: %s', create_response)
