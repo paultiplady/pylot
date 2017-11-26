@@ -1,0 +1,23 @@
+sudo: false
+language: python
+python:
+#  - "3.4"
+  - "3.5"
+#  - "3.6"
+  # - "3.7-dev"
+  # - "pypy"  -- appears to hang
+  # - "pypy3"
+# command to install dependencies
+install: "make"
+# command to run tests
+script:
+  - make ci
+cache: pip
+jobs:
+  include:
+    - stage: test
+      script:
+        - make ci
+#    - stage: coverage
+#      python: 3.5
+#      script: codecov
