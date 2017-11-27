@@ -1,3 +1,4 @@
+import pytest
 import vcr
 from pylot import commands
 
@@ -16,6 +17,7 @@ def test_deploy_dry_run(capsys):
     assert not stderr
 
 
+@pytest.mark.system
 @vcr.use_cassette('tests/fixtures/test_deploy.yml', record_mode='none')
 def test_deploy():
     """Test that the deploy command successfully creates k8s API resources."""
