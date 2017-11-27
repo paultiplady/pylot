@@ -53,4 +53,5 @@ def test_default_none():
 def test_configuration_str():
     """Test that a simple string representation can be rendered for a Configuration instance."""
     config = DefaultConfig(values={'foo': 'FOO!'})
-    assert str(config) == str({'foo': 'FOO!', 'bar': 'BAR'})
+    assert "'foo': 'FOO!'" in str(config)
+    assert "'bar': 'BAR'" in str(config)

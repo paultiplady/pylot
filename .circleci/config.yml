@@ -30,7 +30,7 @@ jobs:
           environment:
           # Have pipenv install the venv to the local .venv directory instead of to the user's home directory.
           - PIPENV_VENV_IN_PROJECT: 1
-          command: pipenv install --dev
+          command: make init
 
       - save_cache:
           paths:
@@ -42,7 +42,10 @@ jobs:
           name: run tests
           environment:
           - PIPENV_VENV_IN_PROJECT: 1
-          command: pipenv run pytest -vv ./tests -m 'not system'
+          command: make ci
+
+      - store_test_results:
+          path: /root/repo/reports
 
 #      - store_artifacts:
 #          path: test-reports
