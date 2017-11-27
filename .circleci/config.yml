@@ -34,7 +34,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
+            - /root/repo/.venv
           key: v1-dependencies-{{ checksum "Pipfile.lock" }}
 
       # run tests!
