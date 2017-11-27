@@ -10,6 +10,7 @@ class Field:
 
     def __init__(self, default=NONE):
         self.default = default
+        self.value = self.NONE
 
 
 class ConfigurationMetaClass(type):
@@ -34,16 +35,20 @@ class Configuration(metaclass=ConfigurationMetaClass):
             if name in values:
                 _log.debug('Field "%s" was provided in values: %s', name, values)
                 value = values.pop(name)
-                setattr(self, name, value)
+                # setattr(self, name, value)
             elif field.default is not Field.NONE:
                 _log.debug('Field "%s" was defaulted: %s', name, field.default)
-                setattr(self, name, field.default)
+                value = field.default
+                # setattr(self, name, field.default)
             else:
                 raise ConfigurationError('Configuration field "%s" was not provided in values, '
                                          'and there is no default value.' % name)
 
+            field = getattr(self, name)
+            field.value = value
+
     def __str__(self):
-        return str({name: getattr(self, name) for name in self.fields})
+        return str({name: getattr(self, name).value for name in self.fields})
 
 
 class ConfigurationError(PylotError):

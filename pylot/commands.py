@@ -4,6 +4,7 @@ from pprint import pformat
 import kubernetes
 import yaml
 from pylot import log, PylotError
+from pylot.job import Job
 from pylot.loader import import_
 from tests.fixtures import all_default_app
 
@@ -34,18 +35,26 @@ def deploy(module_, values_path=None, dry_run=False, debug=False):
     else:
         values = {}
 
-    log.info('Got configuration: %s', pformat(values))
+    log.debug('Got configuration: %s', pformat(values))
 
-    configuration = configuration_cls(values=values)
+    job = Job(objects=specs, configuration_cls=configuration_cls)
+    # configuration = configuration_cls(values=values)
+    job.render(values)
 
     if dry_run:
-        print('Configuration:\n%s' % configuration)
-        print('Specs:\n%s' % specs)
+        # print('Configuration:\n%s' % configuration)
+        # print('Specs:\n%s' % specs)
+
+        print(job.objects_to_yaml())
     else:
         print('Deploying...')
         # TODO: Fix this dummy implementation. This was added for exploratory purposes.
         kubernetes.config.load_kube_config()
+
         v1_client = kubernetes.client.CoreV1Api()
-        pod = all_default_app.pod
-        create_response = v1_client.create_namespaced_pod(namespace='default', body=pod)
-        log.debug('Response: %s', create_response)
+
+        pods = job.objects
+        # pod = all_default_app.pod
+        for pod in pods:
+            create_response = v1_client.create_namespaced_pod(namespace='default', body=pod)
+            log.debug('Response: %s', create_response)

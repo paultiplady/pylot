@@ -6,6 +6,7 @@ from pylot.configuration import Configuration, Field
 class DefaultConfiguration(Configuration):
     foo = Field(default='FOO')
     bar = Field(default='BAR')
+    name = Field(default='NAME')
 
 
 # TODO: How to register these pods?
@@ -15,7 +16,7 @@ class DefaultConfiguration(Configuration):
 # 3) Could define subclasses for all of the API objects which register when instantiated.
 pod = V1Pod(
     metadata=V1ObjectMeta(
-        name='pod-foo',
+        name=DefaultConfiguration.name,
     ),
     spec=V1PodSpec(
         containers=[

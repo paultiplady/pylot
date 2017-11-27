@@ -11,8 +11,8 @@ def test_deploy_dry_run(capsys):
     commands.deploy(module_=DEFAULTED_TEST_MODULE, dry_run=True)
 
     stdout, stderr = capsys.readouterr()
-    assert 'FOO' in stdout
-    assert 'BAR' in stdout
+    assert 'name: NAME' in stdout
+    assert 'metadata' in stdout
     assert not stderr
 
 
