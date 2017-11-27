@@ -32,7 +32,6 @@ jobs:
           - PIPENV_VENV_IN_PROJECT: 1
           command: pipenv install --dev
 
-
       - save_cache:
           paths:
             - ./venv
