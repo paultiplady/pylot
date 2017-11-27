@@ -1,11 +1,12 @@
 """Sample working app configuration."""
-from kubernetes.client import V1PodSpec, V1Container, V1Pod
+from kubernetes.client import V1PodSpec, V1Container, V1Pod, V1ObjectMeta
 from pylot.configuration import Configuration, Field
 
 
-class SampleAppConfiguration(Configuration):
+class DefaultConfiguration(Configuration):
     foo = Field(default='FOO')
     bar = Field(default='BAR')
+    name = Field(default='NAME')
 
 
 # TODO: How to register these pods?
@@ -14,11 +15,14 @@ class SampleAppConfiguration(Configuration):
 # 2) Could add a decorator to manually register.
 # 3) Could define subclasses for all of the API objects which register when instantiated.
 pod = V1Pod(
+    metadata=V1ObjectMeta(
+        name=DefaultConfiguration.name,
+    ),
     spec=V1PodSpec(
         containers=[
             V1Container(
-                name='foo',
-                command='bash -c "while date do; sleep 1; done',
+                name='container-foo',
+                command=['sh', '-c', 'while date; do sleep 1; done'],
                 image='busybox',
             ),
         ],

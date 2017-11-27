@@ -9,7 +9,7 @@ def test_loader_single_module():
     specs, configuration_cls = loader.import_('tests.fixtures.sample_app')
 
     assert configuration_cls is SampleAppConfiguration
-    assert specs == [pod]
+    assert len(specs) == 1
 
 
 def test_loader_rejects_multiple_configurations():

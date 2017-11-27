@@ -42,7 +42,7 @@ jobs:
           name: run tests
           environment:
           - PIPENV_VENV_IN_PROJECT: 1
-          command: pipenv run pytest -vv ./tests
+          command: pipenv run pytest -vv ./tests -m 'not system'
 
 #      - store_artifacts:
 #          path: test-reports

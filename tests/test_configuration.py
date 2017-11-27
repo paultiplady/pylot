@@ -20,15 +20,15 @@ def test_simple_config():
     """Test that a Value can be set in a Configuration."""
     config = SimpleConfig(values={'foo': 'bar'})
 
-    assert config.foo == 'bar'
+    assert config.foo.value == 'bar'
 
 
 def test_default_config():
     """Test that a default Value can be set in a Configuration."""
     config = DefaultConfig(values={'foo': 'FOO'})
 
-    assert config.foo == 'FOO'
-    assert config.bar == 'BAR'
+    assert config.foo.value == 'FOO'
+    assert config.bar.value == 'BAR'
 
 
 def test_not_required_if_default():
@@ -47,7 +47,7 @@ def test_default_none():
 
     config = NoneDefaultConfig(values={})
 
-    assert config.none is None
+    assert config.none.value is None
 
 
 def test_configuration_str():
