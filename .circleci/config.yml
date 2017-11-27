@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.5.4
+      - image: qwilco/docker-python:3.5.4
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -30,17 +30,19 @@ jobs:
           environment:
           # Have pipenv install the venv to the local .venv directory instead of to the user's home directory.
           - PIPENV_VENV_IN_PROJECT: 1
-          command: pip install --user pipenv
+          command: pipenv install --dev
 
       - save_cache:
           paths:
-            - ./venv
+            - /root/repo/.venv
           key: v1-dependencies-{{ checksum "Pipfile.lock" }}
 
       # run tests!
       - run:
           name: run tests
-          command: ~/.local/bin/pipenv run pytest -vv ./tests
+          environment:
+          - PIPENV_VENV_IN_PROJECT: 1
+          command: pipenv run pytest -vv ./tests
 
 #      - store_artifacts:
 #          path: test-reports
